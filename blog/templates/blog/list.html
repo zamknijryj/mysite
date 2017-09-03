@@ -1,10 +1,13 @@
-<html>
-    <head>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        {% for post in posts %}
-            {{ post.title }}
-        {% endfor %}
-    </body>
-</html>
+{% extends "blog/base.html" %}
+
+{% block title %}BLOG{% endblock %}
+
+{% block content %}
+
+    {% for post in object_list %}
+        <h1>{{ post.title }}</h1>
+        <p>Dodano: <span style="color: blue;">{{ post.publish|timesince }}</span> temu przez <span style="color: red;">{{ post.author }}</span></p>
+        <a href="{% url 'post_detail' pk=post.pk slug=post.slug %}">Dalej</a>
+    {% endfor %}
+
+{% endblock %}
