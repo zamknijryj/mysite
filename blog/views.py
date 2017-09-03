@@ -1,9 +1,15 @@
 from django.shortcuts import render, HttpResponse
+from django.views.generic import ListView, DetailView
 from .models import Post
 
 
-def blog(request):
-    posts = Post.objects.all()
+class PostList(ListView):
+    template_name = 'blog/list.html'
 
-    context = {'posts': posts}
-    return render(request, 'blog/list.html', context)
+    def get_queryset(self):
+        return Post.objects.filter(status='publish')
+
+
+class PostDetail(DetailView):
+    template_name = 'blog/detail.html'
+    model = Post
